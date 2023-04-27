@@ -1,0 +1,51 @@
+doctype html
+mixin item(description,price)
+  tr.item
+    td=description
+    td=price
+html
+  head
+    meta(charset="utf-8")
+    title Invoice
+    style
+      include ./includes/invoice.css
+  body
+    div.invoice-box
+      table(cellpadding="0" cellspacing="0")
+        tr(class="top")
+          td(colspan="2")
+            table
+              tr
+                td(class="title")
+                  img(src=senderPicture style="width:100%; max-width:150px;")
+                td(style='white-space:pre;')
+                  |Invoice ##{invoiceNumber}
+                  //- |Created: #{invoiceDate}
+                  |Due: #{invoiceDueDate}
+            
+              tr(class="information")
+                td(colspan="2")
+                  table
+                    tr
+                      //- sender
+                      td(style='white-space:pre;')
+                        |BILL TO
+                        |#{recipient}
+                        |#{recipientAddress}
+                        |#{recipientCity}
+                        |#{recipientEmail}
+                      //- recipient
+                      td(style='white-space:pre;')
+                        |#{sender}
+                        |#{senderAddress}
+                        |#{senderCity}
+                        |#{senderEmail}
+            tr.heading
+              td ITEM
+              td PRICE
+            //- this should be a for loop
+            for e in itemList
+              +item(e.description, e.price)
+            tr(class="total")
+              td 
+              td TOTAL: #{itemTotal}
